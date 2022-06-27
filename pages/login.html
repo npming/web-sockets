@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h3 class="heading" id="username">Enter your user name</h3>
+    <form id="form" action="/home" method="POST">
+        <input class = "inp" id="input" name="name">
+        <button class = "btn" type="submit" onclick="setUser()">Login</button>
+    </form>
+</body>
+    <script>
+        function setUser() {
+            let username = document.getElementById('input').value;
+            if(username.length){
+                sessionStorage.setItem("user", username);  
+            } else {
+                alert("enter username");
+            }
+              
+        }   
+    </script>
+</html>

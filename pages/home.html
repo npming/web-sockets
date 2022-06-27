@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home</title>
+    <style>
+      body { margin: 0; padding: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      #nameHeading{color: blueviolet}
+      h2{text-align: center;}
+      li div {font-size: 14px !important; margin-left: 10px;font-weight: 200;float: right;}
+      li {margin: 10px;font-size: 20px;font-weight: 200;letter-spacing: 1px;color: #3a0606;}
+      ul#list {background: #dbebf2;max-width: 800px;max-height: 170px;overflow: auto;margin: 0 auto;padding: 20px;border-radius: 15px;list-style-type: none;}
+      form#form {text-align:center;margin-top:10px; }
+      form #input { width:400px;padding:8px;margin-right:10px; }
+      form button {padding: 10px;background: #444;border: 0;color: #fff;width: 80px;border-radius: 5px;}
+    </style>
+  </head>
+  <body>
+    
+
+    <h2>You are connected <span id="nameHeading"></span></h2>
+    <ul id="list"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+
+      var socket = io();
+      let username = sessionStorage.getItem("user");
+      document.getElementById("nameHeading").innerHTML = username;
+      socket.emit("user_info", {name: username});
+
+      var form = document.getElementById('form');
+      var input = document.getElementById('input');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit('client_message', {message: input.value, sender: username});
+          input.value = '';
+        }
+      });
+
+      socket.on('server_message', function(data) {
+        if(data.sender == 'server') {
+          var item = document.createElement('li');
+          item.textContent = data.message;
+          item.setAttribute("style", "color: red; text-align: right", "width: 200px")
+          document.getElementById('list').appendChild(item);
+        } else {
+          var item = document.createElement('li');
+          item.textContent = data.message;
+          item.setAttribute("style", "color: green ; text-align: left", "width: 200px")
+          document.getElementById('list').appendChild(item);
+        }
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+
+    </script>
+    
+  </body>
+</html>

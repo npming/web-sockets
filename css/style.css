@@ -1,0 +1,22 @@
+.heading{
+    display: block;
+    margin: auto;
+    width: 180px;
+    
+}
+
+.inp{
+    display: block;
+    margin: auto;
+    width: 200px;
+
+}
+.btn{
+    display: block;
+    margin: auto;
+    
+
+}
+body{
+    background-image: linear-gradient(rgb(92,100,221),rgb(109,39,209));
+}
